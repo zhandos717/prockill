@@ -36,14 +36,24 @@ English, Русский, Қазақша — follows the system language, or set 
 Requirements: macOS 26, Xcode 26, [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`) and an **Apple Development** certificate (sign in to Xcode → Settings → Accounts; a free account works).
 
 ```sh
-./build.sh
-cp -R ProcKill.app ~/Applications/
-open ~/Applications/ProcKill.app
+make install
 ```
+
+That builds the app, copies it to `~/Applications`, registers the widget and launches ProcKill. Run the same command after changing the code — it restarts the app and the widget so the new version shows up right away.
+
+| Command | What it does |
+|---|---|
+| `make install` | build, install to `~/Applications`, register the widget, launch |
+| `make run` | launch the installed app (same as `open -a ProcKill`) |
+| `make build` | build `ProcKill.app` in the project folder only |
+| `make uninstall` | quit, unregister the widget and remove the app |
+| `make clean` | remove build output and the generated Xcode project |
 
 `build.sh` picks your first Apple Development certificate and derives the App Group from its Team ID. To use a specific one: `IDENTITY_HASH=<sha1> TEAM=<team id> ./build.sh`.
 
 Then right-click the desktop → *Edit Widgets* → search *ProcKill*.
+
+**Launching later:** ⌘Space → *ProcKill*, or `open -a ProcKill`. Running it again just reopens the window. To start it with your Mac, add it in *System Settings → General → Login Items*.
 
 `ProcKill.app/Contents/MacOS/ProcKill --dump` prints the current lists to the terminal; `--selftest` runs the parser checks.
 
@@ -59,7 +69,7 @@ Apple Silicon has no public temperature API. ProcKill reads the CPU die sensors 
 | `Widget.swift` | the WidgetKit extension and the kill intent |
 | `Shared.swift` | model, skins and views shared by app and widget |
 | `Localizable.xcstrings` | translations |
-| `project.yml`, `build.sh` | project generation, build and signing |
+| `project.yml`, `build.sh`, `Makefile` | project generation, build, signing and install |
 
 ## License
 
