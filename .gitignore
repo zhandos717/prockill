@@ -1,0 +1,4 @@
+.DS_Store
+build/
+ProcKill.app/
+ProcKill.xcodeproj/

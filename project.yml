@@ -1,0 +1,43 @@
+name: ProcKill
+options:
+  developmentLanguage: en
+  deploymentTarget:
+    macOS: "26.0"
+settings:
+  base:
+    MARKETING_VERSION: "1.1"
+    CURRENT_PROJECT_VERSION: "3"
+    SWIFT_VERSION: "5.0"
+    ENABLE_HARDENED_RUNTIME: NO
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+targets:
+  ProcKill:
+    type: application
+    platform: macOS
+    sources: [App.swift, Shared.swift, Localizable.xcstrings]
+    info:
+      path: build/App-Info.plist
+      properties:
+        LSUIElement: true
+        CFBundleDisplayName: ProcKill
+        ProcKillAppGroup: $(DEVELOPMENT_TEAM).kz.zhandos.prockill
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kz.zhandos.prockill
+    dependencies:
+      - target: ProcKillWidget
+  ProcKillWidget:
+    type: app-extension
+    platform: macOS
+    sources: [Shared.swift, Widget.swift, Localizable.xcstrings]
+    info:
+      path: build/Widget-Info.plist
+      properties:
+        CFBundleDisplayName: ProcKill
+        ProcKillAppGroup: $(DEVELOPMENT_TEAM).kz.zhandos.prockill
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kz.zhandos.prockill.widget
